@@ -64,7 +64,7 @@ with tabs[2]:
     st.info("You can maintain a schedule CSV locally or update the app code to load a schedule file.")
 
 # ---------- Tab 4: Registration ----------
-with tab3:
+with tabs[3]:
     st.header("Registration Form")
     name = st.text_input("Student Name")
     class_ = st.text_input("Class")
