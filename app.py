@@ -64,24 +64,30 @@ with tabs[2]:
     st.info("You can maintain a schedule CSV locally or update the app code to load a schedule file.")
 
 # ---------- Tab 4: Registration ----------
-with tabs[3]:
-    st.header("Student Registration Form")
-    with st.form("reg_form"):
-        name = st.text_input("Student Name")
-        sclass = st.text_input("Class")
-        sec = st.text_input("Section")
-        item = st.text_input("Item Name / Performance")
-        submitted = st.form_submit_button("Register")
-        if submitted:
-            if not name or not sclass or not sec or not item:
-                st.error("Please fill all fields before submitting.")
-            else:
-                timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                reg_df = pd.read_csv(REG_FILE)
-                reg_df = reg_df.append({ "Timestamp":timestamp,"Name":name,"Class":sclass,
-                                        "Section":sec,"Item":item,"Status":"Pending"}, ignore_index=True)
-                reg_df.to_csv(REG_FILE,index=False)
-                st.success(f"{name} registered successfully!")
+with tab3:
+    st.header("Registration Form")
+    name = st.text_input("Student Name")
+    class_ = st.text_input("Class")
+    section = st.text_input("Section")
+    item = st.text_input("Item")
+    contact = st.text_input("Contact Number")
+    address = st.text_area("Address")
+
+    if st.button("Register"):
+        new_entry = {
+            "Name": name,
+            "Class": class_,
+            "Section": section,
+            "Item": item,
+            "Contact": contact,
+            "Address": address
+        }
+
+        df = pd.read_csv("registrations.csv")
+        df = df._append(new_entry, ignore_index=True)
+        df.to_csv("registrations.csv", index=False)
+        st.success("Registered successfully!")
+
 
 # ---------- Tab 5: Registered List ----------
 with tabs[4]:
